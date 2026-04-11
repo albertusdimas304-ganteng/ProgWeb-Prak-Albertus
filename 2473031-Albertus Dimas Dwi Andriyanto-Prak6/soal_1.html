@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2473031-Albertus Dimas Dwi Andriyanto</title>
+    <style>
+        .bagian-input {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: inline-block;
+            width: 130px;
+        }
+
+        input {
+            margin-left: 10px;
+            padding: 2px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        td {
+            border: 2px solid black;
+            width: 60px;
+            height: 45px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bagian-input">
+        <label>Angka Pertama</label>: <input type="text" id="inputA">
+    </div>
+    <div class="bagian-input">
+        <label>Angka Kedua</label>: <input type="text" id="inputB">
+    </div>
+
+    <button onclick="prosesHitung()">Count</button>
+
+    <br>
+    <table>
+        <tr>
+            <td id="a1"></td>
+            <td>+</td>
+            <td id="b1"></td>
+            <td>=</td>
+            <td id="hasil1"></td>
+        </tr>
+        <tr>
+            <td id="a2"></td>
+            <td>-</td>
+            <td id="b2"></td>
+            <td>=</td>
+            <td id="hasil2"></td>
+        </tr>
+    </table>
+
+    <script>
+        function ambilNilai(id) {
+            return document.getElementById(id).value.trim();
+        }
+
+        function isiTabel(id, value) {
+            document.getElementById(id).innerHTML = value;
+        }
+
+        function validasiInput(val1, val2) {
+            if (val1 === "" || val2 === "") {
+                alert("Mohon isi kedua angka terlebih dahulu.");
+                return false;
+            }
+
+            let cek1 = isNaN(val1);
+            let cek2 = isNaN(val2);
+
+            if (cek1 && cek2) {
+                alert("angka pertama dan kedua harus angka.");
+                return false;
+            }
+
+            if (cek1) {
+                alert("angka pertama bukan angka.");
+                return false;
+            }
+
+            if (cek2) {
+                alert("angka kedua harus angka.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function prosesHitung() {
+            let valA = ambilNilai("inputA");
+            let valB = ambilNilai("inputB");
+
+            if (!validasiInput(valA, valB)) return;
+
+            let numA = parseInt(valA);
+            let numB = parseInt(valB);
+
+            // Penjumlahan
+            isiTabel("a1", numA);
+            isiTabel("b1", numB);
+            isiTabel("hasil1", numA + numB);
+
+            // Pengurangan
+            isiTabel("a2", numA);
+            isiTabel("b2", numB);
+            isiTabel("hasil2", numA - numB);
+        }
+    </script>
+
+</body>
+
+</html>

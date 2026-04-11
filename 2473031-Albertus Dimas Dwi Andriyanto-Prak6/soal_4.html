@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2473031-Albertus Dimas Dwi Andriyanto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        table {
+            border: 1px solid #a0a0a0;
+            background-color: white;
+            border-spacing: 2px;
+            width: 380px;
+        }
+
+        td {
+            border: 1px solid #a0a0a0;
+            padding: 6px;
+        }
+
+        .label-biru {
+            color: blue;
+            font-weight: bold;
+            text-align: center;
+            width: 80px;
+        }
+
+        input[type="text"] {
+            width: 95%;
+            padding: 2px 4px;
+            box-sizing: border-box;
+        }
+
+        input[readonly] {
+            color: #999;
+        }
+
+        .tengah {
+            text-align: center;
+        }
+
+        button {
+            color: blue;
+            font-weight: bold;
+            margin: 4px 8px;
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td class="label-biru">Input :</td>
+            <td><input type="text" id="inputData"></td>
+        </tr>
+
+        <tr>
+            <td class="label-biru">Output :</td>
+            <td><input type="text" id="outputData" readonly></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="tengah">
+                <select id="mode">
+                    <option value="d2b">decimal-biner</option>
+                    <option value="b2d">biner-decimal</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="tengah">
+                <button onclick="jalan()">PROSES</button>
+                <button onclick="bersih()">RESET</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        function ambilInput() {
+            return document.getElementById("inputData").value.trim();
+        }
+
+        function tampilkanHasil(val) {
+            document.getElementById("outputData").value = val;
+        }
+
+        function decimalKeBiner(n) {
+            let hasil = [];
+
+            while (n >= 1) {
+                hasil.push(n % 2);
+                n = Math.floor(n / 2);
+            }
+
+            if (hasil.length === 0) return "0";
+
+            return hasil.reverse().join("");
+        }
+
+        function binerKeDecimal(str) {
+            let total = 0;
+            let panjang = str.length;
+
+            for (let i = 0; i < panjang; i++) {
+                let bit = parseInt(str[i]);
+                total += bit * Math.pow(2, (panjang - i - 1));
+            }
+
+            return total;
+        }
+
+        function validasiDecimal(val) {
+            let num = parseInt(val);
+            return !(isNaN(num) || num < 0 || num > 255);
+        }
+
+        function validasiBiner(val) {
+            return /^[01]{8}$/.test(val);
+        }
+
+        function jalan() {
+            let input = ambilInput();
+            let mode = document.getElementById("mode").value;
+
+            if (input === "") {
+                alert("Silakan isi nilai input terlebih dahulu.");
+                return;
+            }
+
+            if (mode === "d2b") {
+                if (!validasiDecimal(input)) {
+                    alert("Input harus angka 0 - 255.");
+                    return;
+                }
+
+                let angka = parseInt(input);
+                tampilkanHasil(decimalKeBiner(angka));
+            }
+
+            else {
+                if (!validasiBiner(input)) {
+                    alert("Input harus 8 digit biner (0/1).");
+                    return;
+                }
+
+                tampilkanHasil(binerKeDecimal(input));
+            }
+        }
+
+        function bersih() {
+            document.getElementById("inputData").value = "";
+            document.getElementById("outputData").value = "";
+        }
+    </script>
+
+</body>
+
+</html>

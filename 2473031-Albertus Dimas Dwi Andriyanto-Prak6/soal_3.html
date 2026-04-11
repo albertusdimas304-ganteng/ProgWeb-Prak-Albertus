@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2473031-Albertus Dimas Dwi Andriyanto</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .kotak-input {
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .kotak-out {
+            border: 1px solid #999;
+            padding: 5px;
+            display: inline-block;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .bata-oranye {
+            background-color: orange;
+            border: 1px solid white;
+        }
+
+        .bata-kosong {
+            background-color: transparent;
+            border: none;
+        }
+
+        button {
+            margin-top: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="kotak-input">
+        Tinggi Piramida: <input type="number" id="tinggi"><br>
+        <button onclick="generate()">proses</button>
+    </div>
+
+    <br>
+
+    <div class="kotak-out" id="output" style="display:none;"></div>
+
+    <script>
+    function ambilTinggi() {
+        let val = document.getElementById("tinggi").value;
+        let t = parseInt(val);
+
+        if (isNaN(t) || t <= 0) {
+            alert("Masukkan angka yang valid");
+            return null;
+        }
+        return t;
+    }
+
+    function generate() {
+        let tinggi = ambilTinggi();
+        if (tinggi === null) return;
+
+        document.getElementById("output").style.display = "inline-block";
+
+        let totalKolom = (2 * tinggi) - 1;
+
+        // 🔥 HITUNG UKURAN KOTAK OTOMATIS
+        let lebarKotak = Math.floor(800 / totalKolom);
+        let tinggiKotak = Math.floor(600 / tinggi);
+
+        // biar tetap kotak (square)
+        let size = Math.min(lebarKotak, tinggiKotak);
+
+        let html = "<table style='width:800px;height:600px;border-collapse:collapse;'>";
+
+        for (let i = 1; i <= tinggi; i++) {
+            html += "<tr>";
+
+            for (let j = 1; j <= totalKolom; j++) {
+
+                if (j >= (tinggi - i + 1) && j <= (tinggi + i - 1)) {
+                    html += "<td style='background:orange;border:1px solid white;width:" + size + "px;height:" + size + "px'></td>";
+                } else {
+                    html += "<td style='border:none;width:" + size + "px;height:" + size + "px'></td>";
+                }
+            }
+
+            html += "</tr>";
+        }
+
+        html += "</table>";
+
+        document.getElementById("output").innerHTML = html;
+    }
+</script>
+
+</body>
+
+</html>
