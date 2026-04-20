@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2473031-Albertus Dimas Dwi Andriyanto</title>
+    <style>
+        .box-luar {
+            border: 1px solid #000;
+            padding: 2px;
+            display: inline-block;
+            box-shadow: 2px 2px 5px #888;
+        }
+
+        .box-dalam {
+            border: 1px solid #000;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .label-soal {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 22px;
+            padding-right: 15px;
+            vertical-align: middle;
+        }
+
+        input[type="text"] {
+            width: 180px;
+            padding: 2px;
+            border: 1px solid #7a7a7a;
+        }
+
+        select {
+            width: 110px; 
+            padding: 1px;
+            font-size: 13px;
+        }
+
+        button {
+            padding: 1px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box-luar">
+        <div class="box-dalam">
+            <table>
+                <tr>
+                    <td class="label-soal">Data</td>
+                    <td><input type="text" id="inputData"></td>
+                </tr>
+                <tr>
+                    <td><button onclick="addKeArray()">Add</button></td>
+                    <td>
+                        <select id="pilihOp" onchange="prosesData()">
+                            <option value="">Pilih Operasi</option>
+                            <option value="1">Display</option>
+                            <option value="2">Count</option>
+                            <option value="3">Sum</option>
+                            <option value="4">Average</option>
+                            <option value="5">Max</option>
+                            <option value="6">Min</option>
+                            <option value="7">Ganjil</option>
+                            <option value="8">Genap</option>
+                            <option value="9">Hapus</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-soal">Hasil</td>
+                    <td><input type="text" id="outputHasil" readonly></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Inisialisasi array kosong 
+        var listData = [];
+
+        function addKeArray() {
+            var input = document.getElementById("inputData");
+            var angka = parseInt(input.value);
+
+            if (!isNaN(angka)) {
+                listData.push(angka); // Tambahkan ke array 
+                input.value = "";    // Ketentuan: Hapus angka setelah Add 
+                input.focus();       // Supaya user langsung bisa input lagi 
+            }
+        }
+
+        function prosesData() {
+            var op = document.getElementById("pilihOp").value;
+            var areaHasil = document.getElementById("outputHasil");
+            var hasil = "";
+
+            if (op === "1") { 
+                hasil = listData.join(", ");
+            } 
+            else if (op === "2") { 
+                hasil = listData.length;
+            } 
+            else if (op === "3") { 
+                var total = 0;
+                for(var i=0; i<listData.length; i++) total += listData[i];
+                hasil = total;
+            } 
+            else if (op === "4") {
+                if(listData.length > 0) {
+                    var total = 0;
+                    for(var i=0; i<listData.length; i++) total += listData[i];
+                    hasil = total / listData.length;
+                }
+            } 
+            else if (op === "5") { 
+                if(listData.length > 0) hasil = Math.max(...listData);
+            } 
+            else if (op === "6") { 
+                if(listData.length > 0) hasil = Math.min(...listData);
+            } 
+            else if (op === "7") { 
+                var ganjil = listData.filter(n => n % 2 !== 0);
+                hasil = ganjil.join(", ");
+            } 
+            else if (op === "8") { 
+                var genap = listData.filter(n => n % 2 === 0);
+                hasil = genap.join(", ");
+            } 
+            else if (op === "9") { 
+                listData = [];
+                hasil = "";
+                document.getElementById("pilihOp").value = "";
+            }
+
+            areaHasil.value = hasil;
+        }
+    </script>
+
+</body>
+</html>

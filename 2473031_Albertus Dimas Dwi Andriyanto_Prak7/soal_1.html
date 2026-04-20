@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2473031-Albertus Dimas Dwi Andriyanto</title>
+    <style>
+        .bingkai-luar {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 430px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            vertical-align: top;
+            padding-bottom: 8px;
+        }
+
+        .label-kolom {
+            width: 85px;
+            font-size: 16px;
+        }
+
+        .titik-dua {
+            width: 15px;
+            text-align: center;
+        }
+
+        .input-judul {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-deskripsi {
+            width: 100%;
+            height: 140px;
+            box-sizing: border-box;
+            resize: none;
+            display: block;
+        }
+
+        .area-hitung {
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        #txt-counter {
+            width: 65px;
+            text-align: center;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bingkai-luar">
+        <table>
+            <tr>
+                <td class="label-kolom">Judul</td>
+                <td class="titik-dua">:</td>
+                <td><input type="text" class="input-judul"></td>
+            </tr>
+            <tr>
+                <td class="label-kolom">Deskripsi</td>
+                <td class="titik-dua">:</td>
+                <td>
+                    <textarea class="input-deskripsi" id="inputUser" onkeyup="updateCounter(this)" onkeydown="updateCounter(this)"></textarea>
+                    <div class="area-hitung">
+                        <input type="text" id="txt-counter" value="0/256" readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function updateCounter(ob) {
+            var obval = ob.value;
+            var maxLimit = 256;
+
+            if (obval.length > maxLimit) {
+                ob.value = obval.substr(0, maxLimit);
+                obval = ob.value;
+            }
+
+            document.getElementById("txt-counter").value = obval.length + "/" + maxLimit;
+        }
+    </script>
+
+</body>
+</html>
